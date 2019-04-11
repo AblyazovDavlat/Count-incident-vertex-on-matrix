@@ -50,7 +50,7 @@ namespace RoadCountApp
             //Parse array of strings into matrix
             for (int i = 1; i < readFile.Length; i++)
             {
-                byteMatrix.matrix[i-1] = readFile[i].Split(' ').ToArray().Select(j => Byte.Parse(j.ToString())).ToArray();
+                byteMatrix[i-1] = readFile[i].Split(' ').ToArray().Select(j => Byte.Parse(j.ToString())).ToArray();
             }
 
             resultCount = CountNumberRoads(byteMatrix);
@@ -65,11 +65,11 @@ namespace RoadCountApp
         {
             int count = 0;
 
-            for (int i = 0; i < byteMatrix.N; i++)
+            for (int i = 0; i < byteMatrix.Size; i++)
             {
-                for (int j = i; j < byteMatrix.N; j++)
+                for (int j = i; j < byteMatrix.Size; j++)
                 {
-                    count += byteMatrix.matrix[i][j];
+                    count += byteMatrix[i][j];
                 }
             }
             return count;
@@ -78,19 +78,45 @@ namespace RoadCountApp
 
     public class ByteMatrix
     {
-        public byte[][] matrix;
-        public int N;
+        private byte[][] matrix;
+        private int size;
 
         public ByteMatrix()
         {
             matrix = new byte[0][];
-            this.N = 0;
+            this.size = 0;
         }
 
         public ByteMatrix(int N)
         {
             matrix = new byte[N][];
-            this.N = N;
+            this.size = N;
+        }
+
+        public byte[] this[int i]
+        {
+            get
+            {
+                return matrix[i];
+            }
+
+            set
+            {
+                matrix[i] = value;
+            }
+        }
+
+        public int Size
+        {
+            get
+            {
+                return size;
+            }
+
+            set
+            {
+                size = value;
+            }
         }
     }
 }
